@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shark 受眾輪廓分析圖表</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-purple: #6B46C1;
+            --brand-purple-light: #9F7AEA;
+            --brand-purple-bg: #F3E8FF;
+            --comp-grey: #A0AEC0;
+            --comp-grey-light: #E2E8F0;
+            --text-dark: #2D3748;
+            --text-muted: #718096;
+            --bg-white: #FFFFFF;
+            --bg-light: #F8FAFC;
+            --positive: #48BB78;
+            --negative: #F56565;
+        }
+        body {
+            margin: 0;
+            padding: 40px;
+            background-color: #E2E8F0;
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .infographic-container {
+            width: 1200px;
+            height: 700px;
+            background-color: var(--bg-white);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+        .chart-label { font-size: 14px; fill: var(--text-dark); font-weight: 500; }
+        .chart-value { font-size: 12px; fill: var(--text-muted); }
+        .title { font-size: 28px; font-weight: 700; fill: var(--text-dark); }
+        .subtitle { font-size: 16px; fill: var(--text-muted); }
+        .legend-text { font-size: 14px; fill: var(--text-dark); font-weight: 500; }
+        .insight-card { fill: var(--bg-light); stroke: var(--comp-grey-light); stroke-width: 1; rx: 8; ry: 8; }
+        .insight-title { font-size: 15px; font-weight: 600; fill: var(--brand-purple); }
+        .insight-body { font-size: 13px; fill: var(--text-dark); line-height: 1.5; }
+        .diff-tag-pos { fill: var(--positive); font-size: 11px; font-weight: 600; }
+        .diff-tag-neg { fill: var(--negative); font-size: 11px; font-weight: 600; }
+        .highlight-rect { fill: var(--brand-purple-bg); opacity: 0.5; rx: 4; ry: 4; }
+    </style>
+</head>
+<body>
+    <div class="infographic-container">
+        <svg viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg">
+            <!-- Background Decoration -->
+            <rect width="1200" height="700" fill="#FFFFFF"/>
+            <path d="M0 0 L1200 0 L1200 120 L0 80 Z" fill="#F9FAFB"/>
+            
+            <!-- Header -->
+            <text x="50" y="55" class="title">受眾輪廓分析：Shark vs. 競品市場結構對照</text>
+            <text x="50" y="85" class="subtitle">數據區間：2026/01/01 - 2026/03/31 | 分析對象：Shark 吸塵器及主要競爭對手</text>
+            
+            <!-- Legend -->
+            <g transform="translate(900, 50)">
+                <rect width="16" height="16" rx="4" fill="#6B46C1"/>
+                <text x="24" y="13" class="legend-text">Shark (品牌)</text>
+                <rect x="120" width="16" height="16" rx="4" fill="#A0AEC0"/>
+                <text x="144" y="13" class="legend-text">競品平均</text>
+            </g>
+
+            <!-- Main Content Layout -->
+            
+            <!-- Left Section: Gender Structure (Stacked Bar) -->
+            <g transform="translate(50, 150)">
+                <text x="0" y="0" style="font-size: 18px; font-weight: 700; fill: var(--text-dark);">性別結構分析</text>
+                <text x="0" y="25" style="font-size: 13px; fill: var(--text-muted);">呈現品牌與競品受眾的性別比例差異</text>
+                
+                <!-- Shark Gender Bar -->
+                <g transform="translate(0, 60)">
+                    <text x="0" y="-10" class="chart-label">Shark</text>
+                    <!-- Male Stack (55.42%) -->
+                    <rect x="0" y="0" width="194" height="40" rx="4" fill="#6B46C1"/>
+                    <text x="10" y="25" style="fill: white; font-size: 13px; font-weight: 600;">男性 55.4%</text>
+                    <!-- Female Stack (44.58%) -->
+                    <rect x="198" y="0" width="156" height="40" rx="4" fill="#9F7AEA"/>
+                    <text x="344" y="25" style="fill: white; font-size: 13px; font-weight: 600; text-anchor: end;">女性 44.6%</text>
+                </g>
+
+                <!-- Competitor Gender Bar -->
+                <g transform="translate(0, 140)">
+                    <text x="0" y="-10" class="chart-label">競品平均</text>
+                    <!-- Male Stack (50.68%) -->
+                    <rect x="0" y="0" width="177" height="40" rx="4" fill="#A0AEC0"/>
+                    <text x="10" y="25" style="fill: white; font-size: 13px; font-weight: 600;">男性 50.7%</text>
+                    <!-- Female Stack (49.32%) -->
+                    <rect x="181" y="0" width="173" height="40" rx="4" fill="#CBD5E0"/>
+                    <text x="344" y="25" style="fill: white; font-size: 13px; font-weight: 600; text-anchor: end;">女性 49.3%</text>
+                </g>
+
+                <!-- Gender Insight Summary -->
+                <g transform="translate(0, 230)">
+                    <rect width="354" height="80" rx="8" fill="#F3F4F6"/>
+                    <text x="15" y="25" style="font-size: 14px; font-weight: 600; fill: var(--brand-purple);">核心觀察：</text>
+                    <text x="15" y="45" style="font-size: 13px; fill: var(--text-dark);">Shark 受眾明顯向男性傾斜，高出競品</text>
+                    <text x="15" y="65" style="font-size: 13px; fill: var(--text-dark);">約 4.7 個百分點，顯示較強的產品偏好。</text>
+                </g>
+            </g>
+
+            <!-- Vertical Separator -->
+            <line x1="450" y1="150" x2="450" y2="480" stroke="#E2E8F0" stroke-width="1"/>
+
+            <!-- Right Section: Age Structure (Horizontal Grouped Bar) -->
+            <g transform="translate(500, 150)">
+                <text x="0" y="0" style="font-size: 18px; font-weight: 700; fill: var(--text-dark);">年齡分佈比對</text>
+                <text x="0" y="25" style="font-size: 13px; fill: var(--text-muted);">括號內數值為 Shark 相較競品的百分點差異 (pp)</text>
+
+                <!-- Age Bars Container -->
+                <g transform="translate(0, 40)">
+                    <!-- Y-Axis Labels -->
+                    <g style="text-anchor: end; font-size: 13px; fill: var(--text-muted);">
+                        <text x="60" y="25">17以下</text>
+                        <text x="60" y="61">18-24</text>
+                        <text x="60" y="97">25-34</text>
+                        <text x="60" y="133">35-44</text>
+                        <text x="60" y="169">45-54</text>
+                        <text x="60" y="205">55-64</text>
+                        <text x="60" y="241">65-74</text>
+                        <text x="60" y="277">75以上</text>
+                    </g>
+
+                    <!-- Bar Data Scale: 1% = 12px -->
+                    
+                    <!-- 17以下 -->
+                    <g transform="translate(75, 10)">
+                        <rect width="15" height="8" rx="2" fill="#6B46C1"/> <!-- 1.25% -->
+                        <rect y="12" width="5" height="8" rx="2" fill="#A0AEC0"/> <!-- 0.39% -->
+                        <text x="40" y="15" class="chart-value">1.3% <tspan class="diff-tag-pos">(+0.9)</tspan></text>
+                    </g>
+
+                    <!-- 18-24 (Highlight Positive) -->
+                    <rect x="0" y="46" width="650" height="28" class="highlight-rect" />
+                    <g transform="translate(75, 46)">
+                        <rect width="100" height="8" rx="2" fill="#6B46C1"/> <!-- 8.33% -->
+                        <rect y="12" width="57" height="8" rx="2" fill="#A0AEC0"/> <!-- 4.74% -->
+                        <text x="110" y="15" class="chart-value">8.3% <tspan class="diff-tag-pos">(+3.6)</tspan></text>
+                    </g>
+
+                    <!-- 25-34 -->
+                    <g transform="translate(75, 82)">
+                        <rect width="275" height="8" rx="2" fill="#6B46C1"/> <!-- 22.92% -->
+                        <rect y="12" width="289" height="8" rx="2" fill="#A0AEC0"/> <!-- 24.12% -->
+                        <text x="300" y="15" class="chart-value">22.9% <tspan class="diff-tag-neg">(-1.2)</tspan></text>
+                    </g>
+
+                    <!-- 35-44 (Weakness) -->
+                    <g transform="translate(75, 118)">
+                        <rect width="295" height="8" rx="2" fill="#6B46C1"/> <!-- 24.58% -->
+                        <rect y="12" width="356" height="8" rx="2" fill="#A0AEC0"/> <!-- 29.68% -->
+                        <text x="370" y="15" class="chart-value">24.6% <tspan class="diff-tag-neg" style="font-size: 12px; font-weight: 700;">(-5.1)</tspan></text>
+                    </g>
+
+                    <!-- 45-54 -->
+                    <g transform="translate(75, 154)">
+                        <rect width="250" height="8" rx="2" fill="#6B46C1"/> <!-- 20.83% -->
+                        <rect y="12" width="294" height="8" rx="2" fill="#A0AEC0"/> <!-- 24.49% -->
+                        <text x="310" y="15" class="chart-value">20.8% <tspan class="diff-tag-neg">(-3.7)</tspan></text>
+                    </g>
+
+                    <!-- 55-64 (Key Strength) -->
+                    <rect x="0" y="190" width="650" height="28" class="highlight-rect" />
+                    <g transform="translate(75, 190)">
+                        <rect width="210" height="8" rx="2" fill="#6B46C1"/> <!-- 17.50% -->
+                        <rect y="12" width="135" height="8" rx="2" fill="#A0AEC0"/> <!-- 11.21% -->
+                        <text x="220" y="15" class="chart-value">17.5% <tspan class="diff-tag-pos" style="font-size: 12px; font-weight: 700;">(+6.3)</tspan></text>
+                        <text x="560" y="16" style="text-anchor: end; fill: var(--brand-purple); font-weight: 600; font-size: 11px;">核心利基市場</text>
+                    </g>
+
+                    <!-- 65-74 -->
+                    <g transform="translate(75, 226)">
+                        <rect width="40" height="8" rx="2" fill="#6B46C1"/> <!-- 3.33% -->
+                        <rect y="12" width="55" height="8" rx="2" fill="#A0AEC0"/> <!-- 4.61% -->
+                        <text x="65" y="15" class="chart-value">3.3% <tspan class="diff-tag-neg">(-1.3)</tspan></text>
+                    </g>
+
+                    <!-- 75以上 -->
+                    <g transform="translate(75, 262)">
+                        <rect width="15" height="8" rx="2" fill="#6B46C1"/> <!-- 1.25% -->
+                        <rect y="12" width="9" height="8" rx="2" fill="#A0AEC0"/> <!-- 0.76% -->
+                        <text x="40" y="15" class="chart-value">1.3% <tspan class="diff-tag-pos">(+0.5)</tspan></text>
+                    </g>
+                </g>
+            </g>
+
+            <!-- Bottom Section: Business Insights (Using foreignObject for text wrapping) -->
+            <foreignObject x="50" y="505" width="1100" height="155">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; background: var(--bg-light); border: 1px solid var(--comp-grey-light); border-radius: 8px; padding: 16px; font-family: 'Inter', 'Noto Sans TC', sans-serif;">
+                    <div style="display: flex; flex-direction: column; gap: 4px;">
+
+                        <div style="font-size: 15px; font-weight: 600; color: var(--brand-purple); display: flex; align-items: center; gap: 8px;">
+                            <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--brand-purple);"></span>
+                            1. 熟齡市場優勢顯著
+                        </div>
+                        <div style="font-size: 13px; color: var(--text-dark); padding-left: 14px; line-height: 1.5;">
+                            Shark 在 55-64 歲族群占比顯著高出競品 6.3pp，顯示該族群對品牌的高忠誠度與購買力，為目前核心優勢區間。
+                        </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                        <div style="font-size: 15px; font-weight: 600; color: var(--brand-purple); display: flex; align-items: center; gap: 8px;">
+                            <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--brand-purple);"></span>
+                            2. 中壯年消費缺口
+                        </div>
+                        <div style="font-size: 13px; color: var(--text-dark); padding-left: 14px; line-height: 1.5;">
+                            在 35-54 歲家庭核心消費群體中，Shark 合計占比低於競品近 9pp，主流市場的心智佔有率仍有較大提升空間。
+                        </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                        <div style="font-size: 15px; font-weight: 600; color: var(--brand-purple); display: flex; align-items: center; gap: 8px;">
+                            <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--brand-purple);"></span>
+                            3. 年輕客群增長潛力
+                        </div>
+                        <div style="font-size: 13px; color: var(--text-dark); padding-left: 14px; line-height: 1.5;">
+                            18-24 歲受眾高出競品 3.6pp，反映品牌在年輕世代具較佳切入點，是避開傳統紅海競爭、擴大覆蓋的關鍵。
+                        </div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                        <div style="font-size: 15px; font-weight: 600; color: var(--brand-purple); display: flex; align-items: center; gap: 8px;">
+                            <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--brand-purple);"></span>
+                            4. 性別偏好差異化
+                        </div>
+                        <div style="font-size: 13px; color: var(--text-dark); padding-left: 14px; line-height: 1.5;">
+                            男性受眾占比達 55.4%，高出競品 4.7pp。品牌目前的產品特性或營銷語言在男性決策者中產生了更強共鳴。
+                        </div>
+                    </div>
+                </div>
+            </foreignObject>
+
+            <!-- Footer -->
+            <g transform="translate(50, 685)">
+                <text x="0" y="0" style="font-size: 11px; fill: var(--text-muted);">* 差異值 (pp) 計算方式：品牌占比 - 競品平均占比 | 數據來源：內部數據分析報告</text>
+                <text x="1150" y="0" style="font-size: 11px; fill: var(--brand-purple); font-weight: 600; text-anchor: end;">SKYAGENT | 數據驅動決策專案</text>
+            </g>
+
+        </svg>
+    </div>
+</body>
+</html>
